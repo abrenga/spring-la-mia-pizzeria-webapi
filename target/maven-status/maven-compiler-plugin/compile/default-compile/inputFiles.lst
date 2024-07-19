@@ -1,0 +1,16 @@
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\controller\IngredientsController.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\controller\MyControllerPizzeria.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\LamiapizzeriaApplication.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\model\Ingredients.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\model\ModelofmenuDB.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\model\ModelOfSpecialPrice.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\model\PizzaDiAmministrazione.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\model\Role.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\model\User.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\repository\IngredientsRepository.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\repository\MyRepository.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\repository\SpecialPriceRepo.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\repository\UserRepository.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\security\DatabaseUserDetails.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\security\DatabaseUserDetailsService.java
+C:\Boolean\java\spring-la-mia-pizzeria-security\src\main\java\it\lamiapizzeria\security\SecurityConfiguration.java
