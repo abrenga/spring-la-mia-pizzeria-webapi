@@ -10,12 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IngredientsController {
 
-    @Autowired
-    private MyRepository repository;
-
-    @Autowired
-    private SpecialPriceRepo specialPriceRepo;
-
 
 
 }
