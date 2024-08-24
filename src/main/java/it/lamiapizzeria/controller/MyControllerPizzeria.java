@@ -1,11 +1,14 @@
 package it.lamiapizzeria.controller;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import it.lamiapizzeria.model.Ingredients;
 import it.lamiapizzeria.repository.IngredientsRepository;
+import it.lamiapizzeria.service.IStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,7 @@ import it.lamiapizzeria.model.PizzaDiAmministrazione;
 import it.lamiapizzeria.repository.MyRepository;
 import it.lamiapizzeria.repository.SpecialPriceRepo;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MyControllerPizzeria {
@@ -36,6 +40,9 @@ public class MyControllerPizzeria {
 
     @Autowired
     private IngredientsRepository IngredientsRepository;
+
+    @Autowired
+    private IStorageService storageService;
 
     @GetMapping("index")
     public String populateMenu(@RequestParam(name = "name", required = false) String name, Model model) {
@@ -83,13 +90,14 @@ public class MyControllerPizzeria {
     }
 
     @PostMapping("/index/form")
-    public String FormDb(@Valid @ModelAttribute("menu") ModelofmenuDB menu, BindingResult bindingResult,
-            Model model) {
+    public String FormDb(@Valid @ModelAttribute("menu") ModelofmenuDB menu, @RequestParam("file") MultipartFile file, BindingResult bindingResult,
+                         Model model) {
 
         if (bindingResult.hasErrors()) {
             return "redirect:/index/form";
         }
-
+        Path urlDatabase=storageService.store(file);
+        menu.setUrlPhoto(urlDatabase.toString());
         repository.save(menu);
         return "redirect:/index/administration";
     }
@@ -142,14 +150,14 @@ public class MyControllerPizzeria {
                 specialPriceRepo.deleteById(id);
                 break;
             case "ingredient":
-            deleteIngredient(id);
+            //deleteIngredient(id);
         }
 
         return "redirect:/index/administration";
     }
 
-    private void deleteIngredient(Integer idIngredient) {
-        Optional<Ingredients>  i = ingredientsRepository.findById(idIngredient);
+    /*private void deleteIngredient(Integer idIngredient) {
+        Optional<Ingredients> i = IngredientsRepository.findById(idIngredient);
         if( !i.isPresent()) {
             return;
         }
@@ -161,8 +169,8 @@ public class MyControllerPizzeria {
               pizza.getIngredients().remove(ingredient);
               repository.save(pizza);
           }
-          ingredientsRepository.delete(ingredient);
-          }
+          IngredientsRepository.delete(ingredient);
+          }*/
 
     @GetMapping("/formSpecialPrice/{id}")
     public String specialPriceAdmin(@PathVariable(name = "id") Integer id, Model model) {
@@ -225,13 +233,13 @@ public class MyControllerPizzeria {
         }
             ModelofmenuDB pizza = repository.getReferenceById(id);
     Ingredients ingredients = IngredientsRepository.findById(ingredient.getId()).get();
-        pizza.getIngredienst().add(ingredient);
+        pizza.getIngredients().add(ingredient);
         repository.save(pizza);
         return "redirect:/index/administration";
     }
 
     @GetMapping("index/formIngredients/{id}/update") 
-    public String updateIgredients(@PathVa riable("id") Integer id, Model model){
+    public String updateIgredients(@PathVariable("id") Integer id, Model model){
         model.addAttribute("idIngredient",IngredientsRepository.getReferenceById(id));
         model.addAttribute("ingredient", new Ingredients());
         model.addAttribute("up", true);
@@ -240,15 +248,15 @@ public class MyControllerPizzeria {
     }
 
     @PostMapping("index/formIngredients/update")  
-    public String updateIgredients(@ModelAttribute("ingredient") Ingredients ingredient,BindingResult bindingResult ){ 
-        
-            bindingResult.hasErrors()) {
+    public String updateIgredients(@ModelAttribute("ingredient") Ingredients ingredient,BindingResult bindingResult ){
+        if (bindingResult.hasErrors()) {
             return "redirect:/index/administration";
-        
+
+        }
      IngredientsRepository.save(ingredient);
         
     return "redirect:/index/administration";
 
     
 
-}
+}}

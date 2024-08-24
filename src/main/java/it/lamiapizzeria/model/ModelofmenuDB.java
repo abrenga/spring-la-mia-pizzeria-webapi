@@ -96,7 +96,7 @@ private List<Ingredients> Ingredients;
         return specialPrice;
     }
 
-    public List<Ingredients> getIngredienst() {
+    public List<Ingredients> getIngredients() {
         return Ingredients;
     }
 
@@ -104,7 +104,7 @@ private List<Ingredients> Ingredients;
         this.specialPrice = specialPrice;
     }
 
-    public void setIngredienst(List<Ingredients> ingredienst) {
+    public void setIngredients(List<Ingredients> ingredienst) {
         this.Ingredients = ingredienst;
     }
 

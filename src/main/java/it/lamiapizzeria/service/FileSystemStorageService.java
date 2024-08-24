@@ -1,5 +1,13 @@
 package it.lamiapizzeria.service;
 
+import it.lamiapizzeria.storage.StorageProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -8,15 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import it.lamiapizzeria.storage.StorageProperties;
 
 @Service
 public class FileSystemStorageService implements IStorageService {
@@ -43,24 +42,24 @@ public class FileSystemStorageService implements IStorageService {
     }
 
     @Override
-    public void store(MultipartFile file) {
+    public Path store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
                 throw new RuntimeException();
             }
             Path destinationFile = this.rootLocation.resolve(
                     Paths.get(file.getOriginalFilename()))
-                    .normalize().toAbsolutePath();
-            if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
-                throw new RuntimeException();
-            }
+                    .normalize();
+
             try (InputStream inputStream = file.getInputStream()) {
-                Files.copy(inputStream, destinationFile,
+                Files.copy(inputStream, destinationFile.toAbsolutePath(),
                         StandardCopyOption.REPLACE_EXISTING);
             }
+            return destinationFile;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

@@ -33,7 +33,7 @@ public class FileUploadController {
 
 
     //attraverso il model colleghiamo il nostro file alla cartella creata
-    @GetMapping("/form/{id}")
+    @GetMapping("/upload/{id}")
     public String listUploadFiles(Model model)throws IOException{
        	model.addAttribute("files", storageService.loadAll().map(
 				path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
@@ -56,7 +56,7 @@ public class FileUploadController {
 				"attachment; filename=\"" + file.getFilename() + "\"").body(file);
     }
 
-    @PostMapping("/")
+    /*@PostMapping("/upload")
 	public String handleFileUpload(@RequestParam("file") MultipartFile file,
 			RedirectAttributes redirectAttributes) {
 
@@ -66,7 +66,7 @@ public class FileUploadController {
 
 		return "redirect:/";
 	}
-
+*/
 
 
 

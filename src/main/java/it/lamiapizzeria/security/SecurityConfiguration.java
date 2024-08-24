@@ -29,37 +29,18 @@ public class SecurityConfiguration {
     SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
 
-        http.authorizeHttpRequests()
+        http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(GET, "/index/administration/**").hasAuthority("USER")
-            //    .requestMatchers("/index/formSpecialPrice/**").hasAuthority("ADMIN")
-            //    .requestMatchers("/index/form/**").hasAnyAuthority("ADMIN","USER")
+                //    .requestMatchers("/index/formSpecialPrice/**").hasAuthority("ADMIN")
+                //    .requestMatchers("/index/form/**").hasAnyAuthority("ADMIN","USER")
 
 
-                .anyRequest().permitAll()
-                .and().formLogin()
-                .and().logout();
-//        http
-//            .authorizeHttpRequests((authorize) -> authorize
-//                    .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-//                    .requestMatchers("/index/administration/**").hasAuthority("USER")
-//                    //.requestMatchers("/index/administration").hasAuthority("ADMIN")
-//                    //.requestMatchers("/index/formSpecialPrice").hasAuthority("ADMIN")
-//                    .anyRequest().permitAll()
-//            )
-//            .csrf(csrf -> csrf
-//                    .ignoringRequestMatchers("/index/administration/**")
-//                    .disable()
-//            )
-//            //.httpBasic(Customizer.withDefaults())
-//            .securityContext((securityContext) -> securityContext
-//                    .securityContextRepository(new DelegatingSecurityContextRepository(
-//                            new RequestAttributeSecurityContextRepository(),
-//                            new HttpSessionSecurityContextRepository()
-//                    ))
-//            )
-//            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//            .formLogin(Customizer.withDefaults());
+                        .anyRequest().permitAll())
+                .csrf(c -> c.disable())
+                .formLogin(l->l.defaultSuccessUrl("/index/administration",true));
+
         return http.build();
+
     }
 
     @Bean

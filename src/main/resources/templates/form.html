@@ -15,8 +15,12 @@
 		<h1 class="mt-5 fs-2 text-center" th:text="${update}? 'Modifica pizza:' : 'inserisci pizza:'"> </h1>
 		<div class=" d-flex align-items-center position-absolute top-50 start-50 translate-middle">
 
-			<form class="mx-auto p-2" style="width: 200px;" id="form-insert" th:object="${menu}" th:action="${update} ? @{/form/{id}(id = ${menu.id})} : @{/index/form}"
+			<form class="mx-auto p-2" enctype="multipart/form-data" style="width: 200px;" id="form-insert" th:object="${menu}" th:action="${update} ? @{/form/{id}(id = ${menu.id})} : @{/index/form}"
 				method="post" >
+
+					<label for="formFile" class="form-label">Inserisci foto:</label>
+					<input class="form-control" type="file" id="formFile" name="file">
+
 
 				<label for="name">nome:</label>
 				<input type="text" id="name" th:field="*{name}" th:errorClass="is-invalid">
